@@ -1,6 +1,7 @@
 import logging
 
 from bs4 import BeautifulSoup
+from time import sleep
 
 
 from settings import CONFIG
@@ -12,6 +13,8 @@ logging.basicConfig(format="%(asctime)s %(levelname)s:%(message)s", level=loggin
 
 class Crawler_Site:
     def crawl_soup(self, url):
+        logging.info(f"Crawling {url}")
+
         html = helper.download_url(url)
         soup = BeautifulSoup(html.content, "html.parser")
 
@@ -66,9 +69,10 @@ class Crawler_Site:
     ):
         episodes_data = self.get_episodes_data(watching_href)
 
-        episodes_keys = len(episodes_data.keys())
+        lenEpisodes = len(episodes_data.keys())
         for episode_number, episode in episodes_data.items():
-            if (post_type == "tvshows") or (episodes_keys > 1):
+            # for i in range(lenEpisodes):
+            if (post_type == "tvshows") or (lenEpisodes > 1):
                 if post_type == "post":
                     if (episode_number == "0") or (episode_number == 0):
                         episode_number = "1"
@@ -143,9 +147,9 @@ class Crawler_Site:
                         table=f"{CONFIG.TABLE_PREFIX}postmeta",
                         data=row,
                     )
+                    sleep(0.1)
 
     def crawl_film(self, href: str, post_type: str = "tvshows"):
-        logging.info(f"Crawling {href}")
         soup = self.crawl_soup(href)
 
         title, description = helper.get_title_and_description(soup)
@@ -169,7 +173,7 @@ class Crawler_Site:
             post_title, season_number = helper.get_title_and_season_number(title)
         else:
             post_title = title
-            season_number = 1
+            season_number = "1"
 
         condition = f'post_title = "{post_title}" AND post_type="{post_type}"'
         be_post = database.select_all_from(
@@ -203,7 +207,7 @@ class Crawler_Site:
         )
 
     def crawl_page(self, url, post_type: str = "tvshows"):
-        logging.info(f"Crawling {url}")
+
         soup = self.crawl_soup(url)
 
         movies_list = soup.find("div", class_="movies-list")
@@ -232,6 +236,8 @@ if __name__ == "__main__":
     # Crawler_Site().crawl_episodes(
     #     1, "https://series9.la/film/country-queen-season-1/watching.html", "", "", ""
     # )
+
+    Crawler_Site().crawl_film("https://series9.la/film/villains-of-valley-view-seaon-1")
 
     Crawler_Site().crawl_film(
         "https://series9.la//film/ghost-adventures-bwm", post_type="post"

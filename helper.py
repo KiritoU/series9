@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from slugify import slugify
+from time import sleep
 
 
 from _db import database
@@ -79,17 +80,19 @@ class Helper:
 
     def get_title_and_season_number(self, series9_title: str) -> list:
         try:
-            if "-" not in series9_title:
-                return [self.format_text(series9_title), "1"]
+            title = series9_title
+            season_number = "1"
 
-            title, season_number = series9_title.split("- Season")
-            # season_number = season.split(" ")[-1]
+            for seasonSplitText in CONFIG.SEASON_SPLIT_TEXTS:
+                if seasonSplitText in series9_title:
+                    title, season_number = series9_title.split(seasonSplitText)
+                    break
 
             return [self.format_text(title), self.format_text(season_number)]
         except Exception as e:
             self.error_log(
                 msg=f"Failed to find title and season number\n{series9_title}\n{e}",
-                log_file="title_season.log",
+                log_file="helper.get_title_and_season_number.log",
             )
 
     def get_title_and_description(self, soup: BeautifulSoup) -> list:
@@ -518,6 +521,9 @@ class Helper:
                 table=f"{CONFIG.TABLE_PREFIX}postmeta",
                 data=row,
             )
+            sleep(0.1)
+
+        sleep(0.1)
 
 
 helper = Helper()
