@@ -237,10 +237,11 @@ if __name__ == "__main__":
     #     1, "https://series9.la/film/country-queen-season-1/watching.html", "", "", ""
     # )
 
-    Crawler_Site().crawl_film("https://series9.la/film/villains-of-valley-view-seaon-1")
+    Crawler_Site().crawl_film("https://series9.la//film/crossing-lines-season-3-wds")
+    Crawler_Site().crawl_film("https://series9.la//film/crossing-lines-season-1-vwd")
 
-    Crawler_Site().crawl_film(
-        "https://series9.la//film/ghost-adventures-bwm", post_type="post"
-    )
+    # Crawler_Site().crawl_film(
+    #     "https://series9.la//film/ghost-adventures-bwm", post_type="post"
+    # )
 
-    Crawler_Site().crawl_film("https://series9.la//film/ghost-adventures-season-1-utc")
+    # Crawler_Site().crawl_film("https://series9.la//film/ghost-adventures-season-1-utc")
