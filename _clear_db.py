@@ -30,7 +30,7 @@ def delete_with(post_ids):
 
 
 def main():
-    post_types = ["tvshows", "episodes", "post"]
+    post_types = ["tvshows", "episodes", "post", "seasons", "attachment"]
     for post_type in post_types:
         post_ids = database.select_all_from(
             table=f"{CONFIG.TABLE_PREFIX}posts",
