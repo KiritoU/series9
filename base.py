@@ -237,8 +237,9 @@ if __name__ == "__main__":
     #     1, "https://series9.la/film/country-queen-season-1/watching.html", "", "", ""
     # )
 
-    Crawler_Site().crawl_film("https://series9.la//film/crossing-lines-season-3-wds")
     Crawler_Site().crawl_film("https://series9.la//film/crossing-lines-season-1-vwd")
+    Crawler_Site().crawl_film("https://series9.la//film/crossing-lines-season-2-cdw")
+    Crawler_Site().crawl_film("https://series9.la//film/crossing-lines-season-3-wds")
 
     # Crawler_Site().crawl_film(
     #     "https://series9.la//film/ghost-adventures-bwm", post_type="post"
