@@ -30,7 +30,15 @@ def delete_with(post_ids):
 
 
 def main():
-    post_types = ["tvshows", "episodes", "post", "seasons", "attachment"]
+    post_types = [
+        "tvshows",
+        "episodes",
+        "post",
+        "seasons",
+        "attachment",
+        "movies",
+        "revision",
+    ]
     for post_type in post_types:
         post_ids = database.select_all_from(
             table=f"{CONFIG.TABLE_PREFIX}posts",
@@ -61,5 +69,5 @@ def delete_with_title(title: str = "crossing lines"):
 
 if __name__ == "__main__":
     # delete(131)
-    # main()
-    delete_with_title()
+    main()
+    # delete_with_title()
