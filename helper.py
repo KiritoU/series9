@@ -402,7 +402,7 @@ class Helper:
     def update_meta_key(self, post_id, meta_key, update_value, field) -> list:
         condition = f'post_id={post_id} AND meta_key="{meta_key}"'
         post_temporadas_episodios = database.select_all_from(
-            table="wp_postmeta", condition=condition
+            table=f"{CONFIG.TABLE_PREFIX}postmeta", condition=condition
         )
         if post_temporadas_episodios:
             value = int(post_temporadas_episodios[0][-1])
