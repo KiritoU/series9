@@ -1,3 +1,4 @@
+from curses.ascii import isdigit
 import requests
 
 
@@ -78,6 +79,15 @@ class Helper:
             )
             return ["", ""]
 
+    def get_season_number(self, strSeason: str) -> int:
+        strSeason = strSeason.split(" ")[0]
+        res = ""
+        for ch in strSeason:
+            if ch.isdigit():
+                res += ch
+
+        return res
+
     def get_title_and_season_number(self, series9_title: str) -> list:
         try:
             title = series9_title
@@ -88,7 +98,10 @@ class Helper:
                     title, season_number = series9_title.split(seasonSplitText)
                     break
 
-            return [self.format_text(title), self.format_text(season_number)]
+            return [
+                self.format_text(title),
+                self.get_season_number(self.format_text(season_number)),
+            ]
         except Exception as e:
             self.error_log(
                 msg=f"Failed to find title and season number\n{series9_title}\n{e}",
